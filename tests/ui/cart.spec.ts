@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { ProductPage } from '../pages/ProductPage.ts'
 
 //Testing for how 1 product is added to the cart
-test.only('select item', async ({ page }) => {  //Test for clicking an item and adding it to the cart
+test('select item', async ({ page }) => {  //Test for clicking an item and adding it to the cart
     await page.goto('https://practicesoftwaretesting.com/');
     await page.pause()
     await page.locator('[data-test="product-01JY1EJFT12MGM2MY389DJ4T9V"]').click();
