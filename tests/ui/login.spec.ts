@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage.ts'
 
-
+//tests for user Authentication
 test('valid login', async ({ page }) => {  //Test for a valid login
     await page.goto('https://practicesoftwaretesting.com/');
     const login = new LoginPage(page)
@@ -18,7 +18,6 @@ test('invalid password', async ({ page }) => {  //Test for an invalid login pass
     await login.GoToLoginPage()
 
     await login.Login('John.Doe@gmail.com','JohnDoe1+-')
-
     await expect(page.locator('[data-test="login-error"]')).toBeVisible;
 
 
