@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test';
+import { ProductPage } from '../pages/ProductPage.ts'
 
-//Testing for how a product is added to the cart
-test('select item', async ({ page }) => {  //Test for clicking an item and adding it to the cart
+//Testing for how 1 product is added to the cart
+test.only('select item', async ({ page }) => {  //Test for clicking an item and adding it to the cart
     await page.goto('https://practicesoftwaretesting.com/');
-    await page.locator('[data-test="product-01JY1B4JVPFFZJCRD5J5YQJY95"]').click();
-    await page.locator('[data-test="add-to-cart"]').click();
+    await page.pause()
+    await page.locator('[data-test="product-01JY1EJFT12MGM2MY389DJ4T9V"]').click();
+    const product = new ProductPage(page);
+    await product.AddToCart();
     await page.locator('[data-test="nav-cart"]').click();
 
-    //Checking if the item has been added to the cart
-    await page.goto('https://practicesoftwaretesting.com/checkout');
-    await expect(page.locator('[data-test="product-title"]')).toBeVisible;
+    //Checking if the item has been added to the cart;
+    await expect(page.locator('[data-test="product-title"]')).toHaveText('Combination Pliers');
 });
 
 test('search item', async ({ page }) => {  //Test for searching an item and adding it to the cart
@@ -21,7 +23,8 @@ test('search item', async ({ page }) => {  //Test for searching an item and addi
     await page.locator('[data-test="search-submit"]').click();
 
     await page.locator('[data-test="product-01JY1B4JVPFFZJCRD5J5YQJY95"]').click();
-    await page.locator('[data-test="add-to-cart"]').click();
+    const product = new ProductPage(page);
+    await product.AddToCart();
     await page.locator('[data-test="nav-cart"]').click();
 
     await page.goto('https://practicesoftwaretesting.com/checkout');

@@ -1,6 +1,5 @@
 //Page Object model demo class
 export  class LoginPage {
-
     private page;
     private email_textbox;
     private password_textbox;
