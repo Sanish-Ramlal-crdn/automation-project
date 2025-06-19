@@ -3,6 +3,7 @@ import { ProductPage } from '../pages/ProductPage.ts'
 import { CartPage } from '../pages/CartPage.ts'
 import { LoginPage } from '../pages/LoginPage.ts'
 import { CheckoutPage } from '../pages/CheckoutPage.ts'
+import { RegisterPage } from '../pages/RegisterPage.ts'
 
 //Testing for how 1 product is added to the cart
 test('valid checkout', async ({ page }) => {
@@ -23,27 +24,31 @@ test('valid checkout', async ({ page }) => {
     await cart.GoToLogin();
     const login = new LoginPage(page)
     await page.pause();
-    await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
+    await login.EnterEmail('John.Doe@gmail.com');
+    await login.EnterPassword('JohnDoe1+');
+    await login.Login();
 
-
+await page.waitForTimeout(2000);
     const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
 
     if (isLoginErrorVisible) {
-        await page.locator('[data-test="register-link"]').click();
-        await page.locator('[data-test="first-name"]').fill('John');
-        await page.locator('[data-test="last-name"]').fill('Doe');
-        await page.locator('[data-test="dob"]').fill('2001-01-01');
-        await page.locator('[data-test="street"]').fill('Abbey Road');
-        await page.locator('[data-test="postal_code"]').fill('12345');
-        await page.locator('[data-test="city"]').fill('London');
-        await page.locator('[data-test="state"]').fill('London');
-        await page.locator('[data-test="country"]').selectOption('GB');
-        await page.locator('[data-test="phone"]').fill('1234567');
-        await page.locator('[data-test="email"]').fill('John.Doe@gmail.com');
-        await page.locator('[data-test="password"]').fill('JohnDoe1+');
-        await page.locator('[data-test="register-submit"]').click();
+       const register = new RegisterPage(page);
+           await register.EnterFirstName("John");
+           await register.EnterLastName("Doe");
+           await register.EnterDOB("2001-01-01");
+           await register.EnterStreet("Abbey Road");
+           await register.EnterPostalCode("12345");
+           await register.EnterCity("London");
+           await register.EnterState("London");
+           await register.SelectCountry("GB");
+           await register.EnterPhone("1234567");
+           await register.EnterEmail("John.Doe@gmail.com");
+           await register.EnterPassword("JohnDoe1+");
+           await register.Register();
         const login = new LoginPage(page)
-        await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
+        await login.EnterEmail('John.Doe@gmail.com');
+        await login.EnterPassword('JohnDoe1+');
+        await login.Login();
         await page.locator('[data-test="nav-cart"]').click();
         const cart = new CartPage(page);
         await cart.GoToLogin();
@@ -81,26 +86,30 @@ test('invalid checkout', async ({ page }) => {
     const cart = new CartPage(page);
     await cart.GoToLogin();
     const login = new LoginPage(page)
-    await login.Login('John.Doe@gmail.com', 'JohnDoe1+')
-
+    await login.EnterEmail('John.Doe@gmail.com');
+    await login.EnterPassword('JohnDoe1+');
+    await login.Login();
+await page.waitForTimeout(2000);
     const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
 
     if (isLoginErrorVisible) {
-        await page.locator('[data-test="register-link"]').click();
-        await page.locator('[data-test="first-name"]').fill('John');
-        await page.locator('[data-test="last-name"]').fill('Doe');
-        await page.locator('[data-test="dob"]').fill('2001-01-01');
-        await page.locator('[data-test="street"]').fill('Abbey Road');
-        await page.locator('[data-test="postal_code"]').fill('12345');
-        await page.locator('[data-test="city"]').fill('London');
-        await page.locator('[data-test="state"]').fill('London');
-        await page.locator('[data-test="country"]').selectOption('GB');
-        await page.locator('[data-test="phone"]').fill('1234567');
-        await page.locator('[data-test="email"]').fill('John.Doe@gmail.com');
-        await page.locator('[data-test="password"]').fill('JohnDoe1+');
-        await page.locator('[data-test="register-submit"]').click();
+        const register = new RegisterPage(page);
+            await register.EnterFirstName("John");
+            await register.EnterLastName("Doe");
+            await register.EnterDOB("2001-01-01");
+            await register.EnterStreet("Abbey Road");
+            await register.EnterPostalCode("12345");
+            await register.EnterCity("London");
+            await register.EnterState("London");
+            await register.SelectCountry("GB");
+            await register.EnterPhone("1234567");
+            await register.EnterEmail("John.Doe@gmail.com");
+            await register.EnterPassword("JohnDoe1+");
+            await register.Register();
         const login = new LoginPage(page)
-        await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
+        await login.EnterEmail('John.Doe@gmail.com');
+        await login.EnterPassword('JohnDoe1+');
+        await login.Login();
         await page.locator('[data-test="nav-cart"]').click();
         const cart = new CartPage(page);
         await cart.GoToLogin();
@@ -151,27 +160,31 @@ test.only('multiple items', async ({ page }) => {
     await cart.GoToLogin();
     await page.pause();
     const login = new LoginPage(page)
-    await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
+    await login.EnterEmail('John.Doe@gmail.com');
+    await login.EnterPassword('JohnDoe1+');
+    await login.Login();
 
     const isLoginErrorVisible = await page.locator('//html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[2]/app-login/div/div/div/div/div').isVisible();
     console.log(isLoginErrorVisible);
 
     if (isLoginErrorVisible) {
-        await page.locator('[data-test="register-link"]').click();
-        await page.locator('[data-test="first-name"]').fill('John');
-        await page.locator('[data-test="last-name"]').fill('Doe');
-        await page.locator('[data-test="dob"]').fill('2001-01-01');
-        await page.locator('[data-test="street"]').fill('Abbey Road');
-        await page.locator('[data-test="postal_code"]').fill('12345');
-        await page.locator('[data-test="city"]').fill('London');
-        await page.locator('[data-test="state"]').fill('London');
-        await page.locator('[data-test="country"]').selectOption('GB');
-        await page.locator('[data-test="phone"]').fill('1234567');
-        await page.locator('[data-test="email"]').fill('John.Doe@gmail.com');
-        await page.locator('[data-test="password"]').fill('JohnDoe1+');
-        await page.locator('[data-test="register-submit"]').click();
+        const register = new RegisterPage(page);
+            await register.EnterFirstName("John");
+            await register.EnterLastName("Doe");
+            await register.EnterDOB("2001-01-01");
+            await register.EnterStreet("Abbey Road");
+            await register.EnterPostalCode("12345");
+            await register.EnterCity("London");
+            await register.EnterState("London");
+            await register.SelectCountry("GB");
+            await register.EnterPhone("1234567");
+            await register.EnterEmail("John.Doe@gmail.com");
+            await register.EnterPassword("JohnDoe1+");
+            await register.Register();
         const login = new LoginPage(page)
-        await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
+        await login.EnterEmail('John.Doe@gmail.com');
+        await login.EnterPassword('JohnDoe1+');
+        await login.Login();
         await page.locator('[data-test="nav-cart"]').click();
         const cart = new CartPage(page);
         await cart.GoToLogin();
