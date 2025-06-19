@@ -39,7 +39,7 @@ test('valid checkout', async ({ page }) => {
 });
 
 //Testing invalid checkout with invalid payment
-test.only('invalid checkout', async ({ page }) => {  
+test('invalid checkout', async ({ page }) => {  
     await page.goto('https://practicesoftwaretesting.com/');
 
     await page.locator('h5.card-title:has-text("Combination Pliers")').click();
