@@ -3,10 +3,56 @@ import { test, expect } from '@playwright/test';
 //Testing for how 1 product is added to the cart
 test('checkout', async ({ page }) => {  //Test for clicking an item and adding it to the cart
     await page.goto('https://practicesoftwaretesting.com/');
-    await page.pause()
-    await page.locator('[data-test="product-01JY1EJFT12MGM2MY389DJ4T9V"]').click();
+
+    await page.locator('[data-test="product-01JY35GB1JDYKCEZB6JT69ANYD"]').click();
+    await page.locator('[data-test="add-to-cart"]').click();
+    await page.getByRole('alert', { name: 'Product added to shopping' }).click();
+
     await page.locator('[data-test="nav-cart"]').click();
 
-    //Checking if the item has been added to the cart;
+    //Checking if the proper item has been added to the cart;
     await expect(page.locator('[data-test="product-title"]')).toHaveText('Combination Pliers');
+
+    //Register
+    await page.locator('[data-test="proceed-1"]').click();
+    // await page.locator('[data-test="register-link"]').click();
+    // await page.locator('[data-test="first-name"]').fill('John');
+    // await page.locator('[data-test="last-name"]').fill('Doe');
+    // await page.locator('[data-test="dob"]').fill('2001-01-01');
+    // await page.locator('[data-test="street"]').fill('Abbey Road');
+    // await page.locator('[data-test="postal_code"]').fill('12345');
+    // await page.locator('[data-test="city"]').fill('London');
+    // await page.locator('[data-test="state"]').fill('London');
+    // await page.locator('[data-test="country"]').selectOption('GB');
+    // await page.locator('[data-test="phone"]').fill('1234567');
+    // await page.locator('[data-test="email"]').fill('John.Doe@gmail.com');
+    // await page.locator('[data-test="password"]').fill('JohnDoe1+');
+    // await page.locator('[data-test="register-submit"]').click();
+
+ 
+    //Login
+    await page.locator('[data-test="email"]').fill('John.Doe@gmail.com');
+    await page.locator('[data-test="password"]').fill('JohnDoe1+');
+    await page.locator('[data-test="login-submit"]').click();
+    // await page.locator('[data-test="nav-cart"]').click();
+    // await page.locator('[data-test="proceed-1"]').click();
+    await page.locator('[data-test="proceed-2"]').click();
+    await page.locator('[data-test="proceed-3"]').click();
+    await page.locator('[data-test="payment-method"]').selectOption('buy-now-pay-later');
+    await page.locator('[data-test="monthly_installments"]').selectOption('3');
+    await page.locator('[data-test="finish"]').click();
+    await page.locator('[data-test="finish"]').click();
+
+    //Getting the invoice number
+    const invoiceNumber = await page.$eval('span', element => element.textContent);
+
+    await page.locator('[data-test="nav-menu"]').click();
+    await page.locator('[data-test="nav-my-invoices"]').click();
+
+    //Verifying that one of the cells in the inovice sections contains the invoice number
+    const cells = await page.$$eval('td', cells => cells.map(cell => cell.textContent));
+    await expect(cells).toContain(invoiceNumber);
+    console.log(`Order placed and verified successfully!`)
+
+
 });
