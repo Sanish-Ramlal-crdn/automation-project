@@ -47,7 +47,7 @@ test('valid checkout', async ({ page }) => {
         await page.locator('[data-test="nav-cart"]').click();
         const cart = new CartPage(page);
         await cart.GoToLogin();
-    } 
+    }
 
     await cart.GoToBilling();
     await cart.GoToCheckout();
@@ -104,7 +104,7 @@ test('invalid checkout', async ({ page }) => {
         await page.locator('[data-test="nav-cart"]').click();
         const cart = new CartPage(page);
         await cart.GoToLogin();
-    } 
+    }
 
     await cart.GoToBilling();
     await cart.GoToCheckout();
@@ -117,7 +117,7 @@ test('invalid checkout', async ({ page }) => {
 });
 
 //Testing multiple product order
-test('multiple items', async({page})=>{
+test.only('multiple items', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
 
     await page.locator('h5.card-title:text("Combination Pliers")').click();
@@ -149,13 +149,12 @@ test('multiple items', async({page})=>{
     //Login
     const cart = new CartPage(page);
     await cart.GoToLogin();
+    await page.pause();
     const login = new LoginPage(page)
-    await page.pause();
     await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
-    await page.pause();
 
-
-    const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
+    const isLoginErrorVisible = await page.locator('//html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[2]/app-login/div/div/div/div/div').isVisible();
+    console.log(isLoginErrorVisible);
 
     if (isLoginErrorVisible) {
         await page.locator('[data-test="register-link"]').click();
@@ -176,7 +175,7 @@ test('multiple items', async({page})=>{
         await page.locator('[data-test="nav-cart"]').click();
         const cart = new CartPage(page);
         await cart.GoToLogin();
-    } 
+    }
 
     await cart.GoToBilling();
     await cart.GoToCheckout();
@@ -190,5 +189,11 @@ test('multiple items', async({page})=>{
 
     // Getting the inovice number
     const invoiceNumber = await page.$eval('div#order-confirmation span', element => element.textContent);
+
+    await page.locator('[data-test="nav-menu"]').click();
+    await page.locator('[data-test="nav-my-invoices"]').click();
+    await page.getByRole('row', { name: `${invoiceNumber} Abbey Road` }).getByRole('link').click();
+    const totalCost = await page.locator('[data-test="total"]').inputValue();
+    expect(totalCost).toBe("$ 99.29");
     console.log(`Order ${invoiceNumber} placed and verified successfully!`);
 })

@@ -13,17 +13,16 @@ export class LoginPage {
         this.login_button = page.locator('input[value="Login"]');
     }
 
-    async GoToLoginPage(){
-        await this.page.goto('https://practicesoftwaretesting.com/auth/login');
+    async EnterEmail(email: string) {
+        await this.email_textbox.fill(email);
     }
 
-    async GoToRegisterPage(){
-        await this.page.goto('https://practicesoftwaretesting.com/auth/register');
+    async EnterPassword(password: string) {
+        await this.password_textbox.fill(password);
     }
 
-    async Login(email: string, password: string){
-        await this.email_textbox.fill(email)
-        await this.password_textbox.fill(password)
+
+    async Login() {
         await this.login_button.click()
     }
 }
