@@ -44,7 +44,7 @@ test('invalid password', async ({ page }) => {  //Test for an invalid login pass
     console.log('Invalid password!')
 });
 
-test.only('invalid account', async ({ page }) => {  //Test for an invalid account
+test('invalid account', async ({ page }) => {  //Test for an invalid account
     await page.goto('https://practicesoftwaretesting.com/auth/login');
     const login = new LoginPage(page)
     await login.EnterEmail('John.Doe@gmail.com');

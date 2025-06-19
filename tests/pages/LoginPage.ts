@@ -21,7 +21,6 @@ export class LoginPage {
         await this.password_textbox.fill(password);
     }
 
-
     async Login() {
         await this.login_button.click()
     }

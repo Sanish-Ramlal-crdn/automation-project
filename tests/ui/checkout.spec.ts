@@ -126,7 +126,7 @@ await page.waitForTimeout(2000);
 });
 
 //Testing multiple product order
-test.only('multiple items', async ({ page }) => {
+test('multiple items', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
 
     await page.locator('h5.card-title:text("Combination Pliers")').click();
