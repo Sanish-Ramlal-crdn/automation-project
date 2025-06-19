@@ -8,7 +8,7 @@ import { CheckoutPage } from '../pages/CheckoutPage.ts'
 test('valid checkout', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
 
-    await page.locator('h5.card-title:has-text("Combination Pliers")').click();
+    await page.locator('h5.card-title:text("Combination Pliers")').click();
 
     const product = new ProductPage(page);
     await product.AddToCart();
@@ -61,15 +61,13 @@ test('valid checkout', async ({ page }) => {
     // Getting the inovice number
     const invoiceNumber = await page.$eval('div#order-confirmation span', element => element.textContent);
     console.log(`Order ${invoiceNumber} placed and verified successfully!`);
-
-
 });
 
 //Testing invalid checkout with invalid payment
 test('invalid checkout', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
 
-    await page.locator('h5.card-title:has-text("Combination Pliers")').click();
+    await page.locator('h5.card-title:text("Combination Pliers")').click();
 
     const product = new ProductPage(page);
     await product.AddToCart();
@@ -85,7 +83,7 @@ test('invalid checkout', async ({ page }) => {
     const login = new LoginPage(page)
     await login.Login('John.Doe@gmail.com', 'JohnDoe1+')
 
-        const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
+    const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
 
     if (isLoginErrorVisible) {
         await page.locator('[data-test="register-link"]').click();
@@ -118,6 +116,79 @@ test('invalid checkout', async ({ page }) => {
     console.log("Invalid bank account number!")
 });
 
+//Testing multiple product order
 test('multiple items', async({page})=>{
-    
+    await page.goto('https://practicesoftwaretesting.com/');
+
+    await page.locator('h5.card-title:text("Combination Pliers")').click();
+
+    const product = new ProductPage(page);
+    await product.AddToCart();
+
+    await page.goto('https://practicesoftwaretesting.com/');
+    await page.locator('h5.card-title:text("Claw Hammer with Shock Reduction Grip")').click();
+
+    await product.AddToCart();
+    await page.goto('https://practicesoftwaretesting.com/');
+    await page.locator('h5.card-title:text("Bolt Cutters")').click();
+
+    await product.AddToCart();
+
+    await page.goto('https://practicesoftwaretesting.com/');
+    await page.locator('h5.card-title:text("Thor Hammer")').click();
+
+    await product.AddToCart();
+
+    await page.goto('https://practicesoftwaretesting.com/');
+    await page.locator('a[aria-label="Page-2"]').click();
+    await page.locator('h5.card-title:text("Wood Saw")').click();
+
+    await product.AddToCart();
+    await page.locator('[data-test="nav-cart"]').click();
+
+    //Login
+    const cart = new CartPage(page);
+    await cart.GoToLogin();
+    const login = new LoginPage(page)
+    await page.pause();
+    await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
+    await page.pause();
+
+
+    const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
+
+    if (isLoginErrorVisible) {
+        await page.locator('[data-test="register-link"]').click();
+        await page.locator('[data-test="first-name"]').fill('John');
+        await page.locator('[data-test="last-name"]').fill('Doe');
+        await page.locator('[data-test="dob"]').fill('2001-01-01');
+        await page.locator('[data-test="street"]').fill('Abbey Road');
+        await page.locator('[data-test="postal_code"]').fill('12345');
+        await page.locator('[data-test="city"]').fill('London');
+        await page.locator('[data-test="state"]').fill('London');
+        await page.locator('[data-test="country"]').selectOption('GB');
+        await page.locator('[data-test="phone"]').fill('1234567');
+        await page.locator('[data-test="email"]').fill('John.Doe@gmail.com');
+        await page.locator('[data-test="password"]').fill('JohnDoe1+');
+        await page.locator('[data-test="register-submit"]').click();
+        const login = new LoginPage(page)
+        await login.Login('John.Doe@gmail.com', 'JohnDoe1+');
+        await page.locator('[data-test="nav-cart"]').click();
+        const cart = new CartPage(page);
+        await cart.GoToLogin();
+    } 
+
+    await cart.GoToBilling();
+    await cart.GoToCheckout();
+    await page.locator('[data-test="payment-method"]').selectOption('bank-transfer');
+    const checkout = new CheckoutPage(page);
+    await checkout.CompleteOrder("Test Bank", "Test Account", "1234567");
+    await checkout.ConfirmOrder();
+
+
+    await page.locator('div#order-confirmation').click();
+
+    // Getting the inovice number
+    const invoiceNumber = await page.$eval('div#order-confirmation span', element => element.textContent);
+    console.log(`Order ${invoiceNumber} placed and verified successfully!`);
 })
