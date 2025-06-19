@@ -1,9 +1,10 @@
-//Page Object model demo class
+//POM login class
 export class LoginPage {
     private page;
     private email_textbox;
     private password_textbox;
     private login_button;
+
 
     constructor(page) {
         this.page = page;
@@ -12,9 +13,12 @@ export class LoginPage {
         this.login_button = page.locator('input[value="Login"]');
     }
 
-
     async GoToLoginPage(){
         await this.page.goto('https://practicesoftwaretesting.com/auth/login');
+    }
+
+    async GoToRegisterPage(){
+        await this.page.goto('https://practicesoftwaretesting.com/auth/register');
     }
 
     async Login(email: string, password: string){

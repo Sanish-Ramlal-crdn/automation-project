@@ -1,4 +1,4 @@
-//Page Object model demo class
+//POM Product class
 export class ProductPage {
     private page;
     private add_button
@@ -10,5 +10,6 @@ export class ProductPage {
 
     async AddToCart(){
         await this.add_button.click()
+        await this.page.getByRole('alert', { name: 'Product added to shopping' }).click();
     }
 }
