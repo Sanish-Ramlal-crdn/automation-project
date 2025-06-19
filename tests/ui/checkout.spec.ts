@@ -5,7 +5,7 @@ import { LoginPage } from '../pages/LoginPage.ts'
 import { CheckoutPage } from '../pages/CheckoutPage.ts'
 
 //Testing for how 1 product is added to the cart
-test.only('valid checkout', async ({ page }) => {
+test('valid checkout', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
 
     await page.locator('h5.card-title:has-text("Combination Pliers")').click();
@@ -117,3 +117,7 @@ test('invalid checkout', async ({ page }) => {
     expect(page.locator('[class="alert alert-danger ng-star-inserted]')).toBeVisible;
     console.log("Invalid bank account number!")
 });
+
+test('multiple items', async({page})=>{
+    
+})
