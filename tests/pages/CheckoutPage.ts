@@ -17,10 +17,35 @@ export class CheckoutPage{
         await this.account_number.fill(account_number);
     }
 
+    async SelectPayment(choice: string){
+        const payment_method=await this.page.locator('[data-test="payment-method"]')
+        await payment_method.selectOption(`${choice}`);
+    }
+
+    async EnterBankName(bank_name: string){
+        await this.bank_name.fill(bank_name);
+    }
+
+    async EnterAccountName(account_name: string){
+        await this.account_name.fill(account_name);
+    }
+
+    async EnterAccountNumber(account_number: string){
+        await this.account_number.fill(account_number);
+    }
+
     async ConfirmOrder() {
         while (await this.page.locator('[data-test="finish"]').isVisible()) {  //Sometimes the button disappears with 2 clicks, while other times it takes more
             await this.page.locator('[data-test="finish"]').click();
             await this.page.waitForTimeout(1000); // Wait for 1 second 
         }
+    }
+
+    async GetInvoice(){
+        await this.page.$eval('div#order-confirmation span', element => element.textContent);
+    }
+
+    async CheckInvoices(){
+        
     }
 }

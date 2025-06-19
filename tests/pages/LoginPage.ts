@@ -24,4 +24,8 @@ export class LoginPage {
     async Login() {
         await this.login_button.click()
     }
+
+    async CheckErrorMessage(){
+        return await this.page.locator('[data-test="login-error"]').isVisible();
+    }
 }

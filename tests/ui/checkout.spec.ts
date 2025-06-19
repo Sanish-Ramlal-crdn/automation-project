@@ -9,59 +9,51 @@ import { RegisterPage } from '../pages/RegisterPage.ts'
 test('valid checkout', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
 
-    await page.locator('h5.card-title:text("Combination Pliers")').click();
-
     const product = new ProductPage(page);
+    await product.SelectItem("Combination Pliers")
     await product.AddToCart();
-    await page.getByRole('alert', { name: 'Product added to shopping' }).click();
-    await page.locator('[data-test="nav-cart"]').click();
-
+    await product.OpenCart();
     //Checking if the proper item has been added to the cart;
-    await expect(page.locator('[data-test="product-title"]')).toHaveText('Combination Pliers');
-
-    //Login
     const cart = new CartPage(page);
+    await cart.VerifyItemInCart("Combination Pliers");
     await cart.GoToLogin();
     const login = new LoginPage(page)
-    await page.pause();
     await login.EnterEmail('John.Doe@gmail.com');
     await login.EnterPassword('JohnDoe1+');
     await login.Login();
 
-await page.waitForTimeout(2000);
-    const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
+    await page.waitForTimeout(2000);
+    const isLoginErrorVisible = await login.CheckErrorMessage();
 
     if (isLoginErrorVisible) {
-       const register = new RegisterPage(page);
-           await register.EnterFirstName("John");
-           await register.EnterLastName("Doe");
-           await register.EnterDOB("2001-01-01");
-           await register.EnterStreet("Abbey Road");
-           await register.EnterPostalCode("12345");
-           await register.EnterCity("London");
-           await register.EnterState("London");
-           await register.SelectCountry("GB");
-           await register.EnterPhone("1234567");
-           await register.EnterEmail("John.Doe@gmail.com");
-           await register.EnterPassword("JohnDoe1+");
-           await register.Register();
-        const login = new LoginPage(page)
+        const register = new RegisterPage(page);
+        await register.EnterFirstName("John");
+        await register.EnterLastName("Doe");
+        await register.EnterDOB("2001-01-01");
+        await register.EnterStreet("Abbey Road");
+        await register.EnterPostalCode("12345");
+        await register.EnterCity("London");
+        await register.EnterState("London");
+        await register.SelectCountry("GB");
+        await register.EnterPhone("1234567");
+        await register.EnterEmail("John.Doe@gmail.com");
+        await register.EnterPassword("JohnDoe1+");
+        await register.Register();
         await login.EnterEmail('John.Doe@gmail.com');
         await login.EnterPassword('JohnDoe1+');
         await login.Login();
-        await page.locator('[data-test="nav-cart"]').click();
-        const cart = new CartPage(page);
+        await product.OpenCart();
         await cart.GoToLogin();
     }
 
     await cart.GoToBilling();
     await cart.GoToCheckout();
-    await page.locator('[data-test="payment-method"]').selectOption('bank-transfer');
     const checkout = new CheckoutPage(page);
-    await checkout.CompleteOrder("Test Bank", "Test Account", "1234567");
+    await checkout.SelectPayment('bank-transfer');
+    await checkout.EnterBankName("Test Bank");
+    await checkout.EnterAccountName("Test Account");
+    await checkout.EnterAccountNumber("1234567");
     await checkout.ConfirmOrder();
-
-    await page.locator('div#order-confirmation').click();
 
     // Getting the inovice number
     const invoiceNumber = await page.$eval('div#order-confirmation span', element => element.textContent);
@@ -89,23 +81,23 @@ test('invalid checkout', async ({ page }) => {
     await login.EnterEmail('John.Doe@gmail.com');
     await login.EnterPassword('JohnDoe1+');
     await login.Login();
-await page.waitForTimeout(2000);
+    await page.waitForTimeout(2000);
     const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
 
     if (isLoginErrorVisible) {
         const register = new RegisterPage(page);
-            await register.EnterFirstName("John");
-            await register.EnterLastName("Doe");
-            await register.EnterDOB("2001-01-01");
-            await register.EnterStreet("Abbey Road");
-            await register.EnterPostalCode("12345");
-            await register.EnterCity("London");
-            await register.EnterState("London");
-            await register.SelectCountry("GB");
-            await register.EnterPhone("1234567");
-            await register.EnterEmail("John.Doe@gmail.com");
-            await register.EnterPassword("JohnDoe1+");
-            await register.Register();
+        await register.EnterFirstName("John");
+        await register.EnterLastName("Doe");
+        await register.EnterDOB("2001-01-01");
+        await register.EnterStreet("Abbey Road");
+        await register.EnterPostalCode("12345");
+        await register.EnterCity("London");
+        await register.EnterState("London");
+        await register.SelectCountry("GB");
+        await register.EnterPhone("1234567");
+        await register.EnterEmail("John.Doe@gmail.com");
+        await register.EnterPassword("JohnDoe1+");
+        await register.Register();
         const login = new LoginPage(page)
         await login.EnterEmail('John.Doe@gmail.com');
         await login.EnterPassword('JohnDoe1+');
@@ -169,18 +161,18 @@ test('multiple items', async ({ page }) => {
 
     if (isLoginErrorVisible) {
         const register = new RegisterPage(page);
-            await register.EnterFirstName("John");
-            await register.EnterLastName("Doe");
-            await register.EnterDOB("2001-01-01");
-            await register.EnterStreet("Abbey Road");
-            await register.EnterPostalCode("12345");
-            await register.EnterCity("London");
-            await register.EnterState("London");
-            await register.SelectCountry("GB");
-            await register.EnterPhone("1234567");
-            await register.EnterEmail("John.Doe@gmail.com");
-            await register.EnterPassword("JohnDoe1+");
-            await register.Register();
+        await register.EnterFirstName("John");
+        await register.EnterLastName("Doe");
+        await register.EnterDOB("2001-01-01");
+        await register.EnterStreet("Abbey Road");
+        await register.EnterPostalCode("12345");
+        await register.EnterCity("London");
+        await register.EnterState("London");
+        await register.SelectCountry("GB");
+        await register.EnterPhone("1234567");
+        await register.EnterEmail("John.Doe@gmail.com");
+        await register.EnterPassword("JohnDoe1+");
+        await register.Register();
         const login = new LoginPage(page)
         await login.EnterEmail('John.Doe@gmail.com');
         await login.EnterPassword('JohnDoe1+');
@@ -197,11 +189,8 @@ test('multiple items', async ({ page }) => {
     await checkout.CompleteOrder("Test Bank", "Test Account", "1234567");
     await checkout.ConfirmOrder();
 
-
-    await page.locator('div#order-confirmation').click();
-
     // Getting the inovice number
-    const invoiceNumber = await page.$eval('div#order-confirmation span', element => element.textContent);
+    const invoiceNumber = checkout.GetInvoice()
 
     await page.locator('[data-test="nav-menu"]').click();
     await page.locator('[data-test="nav-my-invoices"]').click();
