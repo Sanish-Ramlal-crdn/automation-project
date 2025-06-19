@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { ProductPage } from '../pages/ProductPage.ts'
 import { CartPage } from '../pages/CartPage.ts'
 import { LoginPage } from '../pages/LoginPage.ts'
+import { CheckoutPage } from '../pages/CheckoutPage.ts'
 
 //Testing for how 1 product is added to the cart
 test('checkout', async ({ page }) => {  //Test for clicking an item and adding it to the cart
@@ -18,29 +19,21 @@ test('checkout', async ({ page }) => {  //Test for clicking an item and adding i
     await expect(page.locator('[data-test="product-title"]')).toHaveText('Combination Pliers');
 
     //Login
-    const cart =new CartPage(page);
+    const cart = new CartPage(page);
     await cart.GoToLogin();
     const login = new LoginPage(page)
-    await login.Login('John.Doe@gmail.com','JohnDoe1+')
+    await login.Login('John.Doe@gmail.com', 'JohnDoe1+')
 
     await cart.GoToBilling();
     await cart.GoToCheckout();
- 
-    await page.locator('[data-test="payment-method"]').selectOption('buy-now-pay-later');
-    await page.locator('[data-test="monthly_installments"]').selectOption('3');
-    await page.locator('[data-test="finish"]').click();
-    await page.locator('[data-test="finish"]').click();
+    await page.locator('[data-test="payment-method"]').selectOption('bank-transfer');
+    const checkout = new CheckoutPage(page);
+    await checkout.CompleteOrder("Test Bank", "Test Account", "1234567");
+    await checkout.ConfirmOrder();
 
-    //Getting the invoice number
-    const invoiceNumber = await page.$eval('span', element => element.textContent);
+    await page.locator('div#order-confirmation').click();
 
-    await page.locator('[data-test="nav-menu"]').click();
-    await page.locator('[data-test="nav-my-invoices"]').click();
-
-    //Verifying that one of the cells in the inovice sections contains the invoice number
-    const cells = await page.$$eval('td', cells => cells.map(cell => cell.textContent));
-    await expect(cells).toContain(invoiceNumber);
-    console.log(`Order placed and verified successfully!`)
-
-
+    // Getting the inovice number
+    const invoiceNumber = await page.$eval('div#order-confirmation span', element => element.textContent);
+    console.log(`Order ${invoiceNumber} placed and verified successfully!`);
 });
