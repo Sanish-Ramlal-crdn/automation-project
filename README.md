@@ -1,8 +1,11 @@
 ## Assignment 1: Web UI Testing
-<p ><a href="#project-description">Project Description</a> 
-<a href="#key-features">Key Features</a>
-<a href="#how-to-run">How To Run</a>
+
+<p style="display: flex; flex-direction: column; align-items: flex-start;">
+  <a href="#project-description">Project Description</a>
+  <a href="#key-features">Key Features</a>
+  <a href="#how-to-run">How To Run</a>
 </p>
+
 
 ## Project Description
 
