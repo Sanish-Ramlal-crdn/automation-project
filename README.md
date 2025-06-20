@@ -93,21 +93,21 @@ Or you can choose which test file to run
 npx playwright test ./tests/ui/[test_file_name].spec.ts
 ```
 
-You can also select the browser on which to run the tests. For example
+You can also select the browser on which to run the tests, else it will run on all 3 browsers by default. For example
 
 Chromium
 ```javascript
 npx playwright test --project=chromium
 ```
 
-And you can also choose to activate headed mode
+And you can also choose to activate headed mode, as the deault mode is headless
 
 Headed
 ```javascript
 npx playwright test --headed
 ```
 
-You can view a report after doing a test by running the following command
+You can view the report after doing a test by running the following command
 
 Report
 ```javascript
@@ -121,3 +121,5 @@ npx playwright test --ui
 
 For more information, you can visit the official Playwright documentation at: 
 https://playwright.dev/docs/api/class-playwright
+
+And the official Playwright Git repository: https://github.com/microsoft/playwright
