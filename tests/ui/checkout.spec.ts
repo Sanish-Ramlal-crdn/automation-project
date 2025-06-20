@@ -10,7 +10,7 @@ import products from '../fixtures/products.json';
 import checkout_details from '../fixtures/checkout.json';
 
 //Testing for how 1 product is added to the cart
-test.describe.only('single checkout', () => {
+test.describe('single checkout', () => {
     let first_product;
 
     test.beforeEach(async ({ page }) => {
@@ -70,7 +70,7 @@ test.describe.only('single checkout', () => {
 
         // Getting the inovice number
         const invoiceNumber = await checkout.GetInvoice();
-        console.log(`Order ${invoiceNumber} placed and verified successfully! - Test Passed`);
+        console.log(`Order ${invoiceNumber} placed and verified successfully for a single item! - Test Passed`);
     });
 
     //Testing invalid checkout with invalid payment
