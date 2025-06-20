@@ -15,7 +15,7 @@ test('user registration', async ({ page }) => {  //Test for a valid registration
     await register.EnterState("London");
     await register.SelectCountry("GB");
     await register.EnterPhone("1234567");
-    await register.EnterEmail("John.Doe@gmail.com");
+    await register.EnterEmail("Pohn.Doe@gmail.com");
     await register.EnterPassword("JohnDoe1+");
     await register.Register();
     await page.waitForTimeout(2000);
@@ -29,7 +29,7 @@ test('valid login', async ({ page }) => {  //Test for a valid login
     await login.EnterEmail('John.Doe@gmail.com');
     await login.EnterPassword('JohnDoe1+');
     await login.Login();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(2000);  //Accounting for slow login
     await expect(page.url()).toBe('https://practicesoftwaretesting.com/account');
     console.log('User logged in successfully');
 });
