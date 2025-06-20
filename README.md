@@ -1,8 +1,6 @@
 ## Assignment 1: Web UI Testing
 <p align="center"><a href="#project-description">Project Description</a> - <a href="#key-features">Key Features</a> - <a href="#how-to-run">How To Run</a></p>
 
-<img src="https://repolaunch.vercel.app/assets/img/yt.webp" alt="" align="center" width="auto" height="auto">
-
 ## Project Description
 
 The goal of this assignment is to develop a functional end-to-end (E2E) flows for Practice Software Testing while designing a scalable test automation framework using Playwright
@@ -20,44 +18,78 @@ This project mainly uses:
 
 ## UI Test Scenarios
 
-The following scenarios have been tested
+The following scenarios have been tested:
+1. User Authentication
+    • ✅ Valid Login (Enter correct credentials & verify login)
+    • ❌ Invalid Login (Enter wrong credentials & validate error message)
+
+2. Product Purchase Flow
+    • Add a product to cart
+    o Browse available products
+    o Add a product to the cart
+    o Verify the cart reflects the correct item
+
+3. Checkout & Complete Order
+    • Proceed to checkout
+    • Enter valid payment details
+    • Complete the purchase
+    • Verify order confirmation
+
+4. Invalid Checkout
+    • Attempt checkout with an invalid payment
+    • Validate error messages
+
+5. Multiple Product Order
+    • Add 5+ products to the cart
+    • Checkout & verify order summary
 
 
 ## How to Run
 Install Node and npm from https://nodejs.org/en/download/
 
 Ensure that typescript is installed on your machine
+
 TypeScript
 ```javascript
 npm install -g typescript
 ```
 
 Once you have installed TypeScript, open the project and install Playwright if it's not already installed by running the below command in the project's root
+
 Playwright
 ```javascript
 npm init playwright@latest
 ```
 
 Now, you can run all the tests at once by typing this command on the terminal of your code editor
+
 All Tests
 ```javascript
 npx playwright test
 ```
 
 Or you can choose which test file to run
+
 Select test
 ```javascript
 npx playwright test ./tests/ui/[test_file_name]
 ```
 
 You can also select the browser on which to run the tests. For example
+
 Chromium
 ```javascript
 npx playwright test --project=chromium
 ```
 
 And you can also choose to activate headed mode
-Chromium
+
+Headed
 ```javascript
 npx playwright test --headed
+```
+
+You can view a report after doing a test by running the following command
+```javascript
+npx playwright show-report
 ```
