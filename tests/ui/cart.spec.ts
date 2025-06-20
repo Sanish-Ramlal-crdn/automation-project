@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect} from '@playwright/test';
 import { ProductPage } from '../pages/ProductPage.ts'
 import { CartPage } from '../pages/CartPage.ts'
 import products from '../fixtures/products.json'
@@ -12,7 +12,6 @@ test('select item', async ({ page }) => {  //Test for clicking an item and addin
     await product.SelectItem(first_product.name)
     await product.AddToCart();
     await product.OpenCart();
-
     const cart = new CartPage(page)
     //Checking if the item has been added to the cart;
     await cart.VerifyItemInCart(first_product.name);

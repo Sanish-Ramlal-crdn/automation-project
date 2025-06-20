@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test} from '@playwright/test';
 import { ProductPage } from '../pages/ProductPage.ts'
 import { CartPage } from '../pages/CartPage.ts'
 import { LoginPage } from '../pages/LoginPage.ts'
@@ -10,7 +10,7 @@ import products from '../fixtures/products.json';
 import checkout_details from '../fixtures/checkout.json';
 
 //Testing for how 1 product is added to the cart
-test.describe('single checkout', () => {
+test.describe.only('single checkout', () => {
     let first_product;
 
     test.beforeEach(async ({ page }) => {
