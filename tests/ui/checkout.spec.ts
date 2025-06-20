@@ -88,7 +88,7 @@ test.describe('single checkout', () => {
 
 
 //Testing multiple product order
-test.only('multiple items', async ({ page }) => {
+test('multiple items', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
     const product = new ProductPage(page);
     let total = 0;
