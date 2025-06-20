@@ -18,7 +18,7 @@ This project mainly uses:
 *   **Screenshots**: Screenshots have been included for key UI actions and error messages. They can be found in the 'screenshots' folder inside the 'tests' folder
 *   **Retries**: tests can be retried up to 3 times for flaky tests.
 *   **Continuous Integration (CI) support**: All tests are Continuously integrated via GitHub Actions for every commit done.
-*   **Reporting**: A report has already been generated in the playwright-report folder of the project which shows all the test results and is automatically generated every time a test is run
+*   **Reporting**: An HTML report has already been generated in the playwright-report folder of the project which shows all the test results and is automatically generated every time a test is run
 
 ## UI Test Scenarios
 
