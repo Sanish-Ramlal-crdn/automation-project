@@ -1,31 +1,31 @@
 import { expect } from '@playwright/test';
-export class CheckoutPage{
+export class CheckoutPage {
     private page;
     private bank_name;
     private account_name;
     private account_number;
 
-    constructor(page){
+    constructor(page) {
         this.page = page;
         this.bank_name = page.locator('#bank_name');
         this.account_name = page.locator('#account_name');
         this.account_number = page.locator('#account_number');
     }
 
-    async SelectPayment(choice: string){
-        const payment_method=await this.page.locator('[data-test="payment-method"]')
+    async SelectPayment(choice: string) {
+        const payment_method = await this.page.locator('[data-test="payment-method"]')
         await payment_method.selectOption(`${choice}`);
     }
 
-    async EnterBankName(bank_name: string){
+    async EnterBankName(bank_name: string) {
         await this.bank_name.fill(bank_name);
     }
 
-    async EnterAccountName(account_name: string){
+    async EnterAccountName(account_name: string) {
         await this.account_name.fill(account_name);
     }
 
-    async EnterAccountNumber(account_number: string){
+    async EnterAccountNumber(account_number: string) {
         await this.account_number.fill(account_number);
     }
 
@@ -36,17 +36,17 @@ export class CheckoutPage{
         }
     }
 
-    async CheckError(){
+    async CheckError() {
         expect(this.page.locator('[class="alert alert-danger ng-star-inserted]')).toBeVisible;
     }
 
-    async GetInvoice(){
+    async GetInvoice() {
         await this.page.waitForSelector('div#order-confirmation span');
         return await this.page.$eval('div#order-confirmation span', element => element.textContent);
     }
 
-    async CheckInvoices(){
-            await this.page.locator('[data-test="nav-menu"]').click();
-    await this.page.locator('[data-test="nav-my-invoices"]').click();
+    async CheckInvoices() {
+        await this.page.locator('[data-test="nav-menu"]').click();
+        await this.page.locator('[data-test="nav-my-invoices"]').click();
     }
 }
