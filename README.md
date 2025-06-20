@@ -67,8 +67,6 @@ Install Node and npm from
 https://nodejs.org/en/download/
 
 Ensure that typescript is installed on your machine
-
-TypeScript
 ```javascript
 npm install -g typescript
 ```
