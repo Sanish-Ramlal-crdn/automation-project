@@ -24,6 +24,7 @@ This project mainly uses:
 
 The following scenarios have been tested:
 1. User Authentication
+
     • ✅ Valid Login (Enter correct credentials & verify login)
 
     • ❌ Invalid Login (Enter wrong credentials & validate error message)
@@ -38,6 +39,7 @@ The following scenarios have been tested:
     o Verify the cart reflects the correct item
 
 3. Checkout & Complete Order
+
     • Proceed to checkout
 
     • Enter valid payment details
@@ -47,11 +49,13 @@ The following scenarios have been tested:
     • Verify order confirmation
 
 4. Invalid Checkout
+
     • Attempt checkout with an invalid payment
 
     • Validate error messages
 
 5. Multiple Product Order
+
     • Add 5+ products to the cart
 
     • Checkout & verify order summary
