@@ -63,7 +63,8 @@ The following scenarios have been tested:
 
 
 ## How to Run
-Install Node and npm from https://nodejs.org/en/download/
+Install Node and npm from 
+https://nodejs.org/en/download/
 
 Ensure that typescript is installed on your machine
 
@@ -118,4 +119,5 @@ You can also run the tests via the Playwright UI
 npx playwright test --ui
 ```
 
-For more information, you can visit the official Playwright documentation at: https://playwright.dev/docs/api/class-playwright
+For more information, you can visit the official Playwright documentation at: 
+https://playwright.dev/docs/api/class-playwright
