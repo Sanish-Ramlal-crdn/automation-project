@@ -16,6 +16,6 @@ test('select item', async ({ page }) => {  //Test for clicking an item and addin
     const cart = new CartPage(page)
     //Checking if the item has been added to the cart;
     await cart.VerifyItemInCart(first_product.name);
-    console.log("Item added successfully! - test Passed")
+    console.log("Item added successfully! - Test Passed")
 });
 

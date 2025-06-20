@@ -5,22 +5,26 @@ import { LoginPage } from '../pages/LoginPage.ts'
 import { CheckoutPage } from '../pages/CheckoutPage.ts'
 import { RegisterPage } from '../pages/RegisterPage.ts'
 import { InvoicesPage } from '../pages/InvoicesPage.ts';
+import user from '../fixtures/user.json';
+import products from '../fixtures/products.json';
+import checkout_details from '../fixtures/checkout.json';
 
 //Testing for how 1 product is added to the cart
 test('valid checkout', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
-
+    let first_product;
+    first_product = products.find(product => product.id === "1");
     const product = new ProductPage(page);
-    await product.SelectItem("Combination Pliers")
+    await product.SelectItem(first_product.name)
     await product.AddToCart();
     await product.OpenCart();
     //Checking if the proper item has been added to the cart;
     const cart = new CartPage(page);
-    await cart.VerifyItemInCart("Combination Pliers");
+    await cart.VerifyItemInCart(first_product.name);
     await cart.GoToLogin();
     const login = new LoginPage(page)
-    await login.EnterEmail('John.Doe@gmail.com');
-    await login.EnterPassword('JohnDoe1+');
+    await login.EnterEmail(user.email);
+    await login.EnterPassword(user.correct_password);
     await login.Login();
 
     const isLoginErrorVisible = await login.CheckErrorMessage();
@@ -28,21 +32,23 @@ test('valid checkout', async ({ page }) => {
     if (isLoginErrorVisible) {
         login.GoToRegistration();
         const register = new RegisterPage(page);
-        await register.EnterFirstName("John");
-        await register.EnterLastName("Doe");
-        await register.EnterDOB("2001-01-01");
-        await register.EnterStreet("Abbey Road");
-        await register.EnterPostalCode("12345");
-        await register.EnterCity("London");
-        await register.EnterState("London");
-        await register.SelectCountry("GB");
-        await register.EnterPhone("1234567");
-        await register.EnterEmail("John.Doe@gmail.com");
-        await register.EnterPassword("JohnDoe1+");
+        await register.EnterFirstName(user.first_name);
+        await register.EnterLastName(user.last_name);
+        await register.EnterDOB(user.dob);
+        await register.EnterStreet(user.street);
+        await register.EnterPostalCode(user.postal_code);
+        await register.EnterCity(user.city);
+        await register.EnterState(user.state);
+        await register.SelectCountry(user.country);
+        await register.EnterPhone(user.phone);
+        await register.EnterEmail(user.email);
+        await register.EnterPassword(user.correct_password);
         await register.Register();
-        await login.EnterEmail('John.Doe@gmail.com');
-        await login.EnterPassword('JohnDoe1+');
+        await page.waitForTimeout(3000);
+        await login.EnterEmail(user.email);
+        await login.EnterPassword(user.correct_password);
         await login.Login();
+        await page.waitForTimeout(3000);
         await product.OpenCart();
         await cart.GoToLogin();
     }
@@ -50,32 +56,33 @@ test('valid checkout', async ({ page }) => {
     await cart.GoToBilling();
     await cart.GoToCheckout();
     const checkout = new CheckoutPage(page);
-    await checkout.SelectPayment('bank-transfer');
-    await checkout.EnterBankName("Test Bank");
-    await checkout.EnterAccountName("Test Account");
-    await checkout.EnterAccountNumber("1234567");
+    await checkout.SelectPayment(checkout_details.type);
+    await checkout.EnterBankName(checkout_details.bank_name);
+    await checkout.EnterAccountName(checkout_details.account_name);
+    await checkout.EnterAccountNumber(checkout_details.valid_account_number);
     await checkout.ConfirmOrder();
 
     // Getting the inovice number
     const invoiceNumber = await checkout.GetInvoice();
-    console.log(`Order ${invoiceNumber} placed and verified successfully!`);
+    console.log(`Order ${invoiceNumber} placed and verified successfully! - Test Passed`);
 });
 
 //Testing invalid checkout with invalid payment
 test('invalid checkout', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
-
+    let first_product;
+    first_product = products.find(product => product.id === "1");
     const product = new ProductPage(page);
-    await product.SelectItem("Combination Pliers")
+    await product.SelectItem(first_product.name)
     await product.AddToCart();
     await product.OpenCart();
     //Checking if the proper item has been added to the cart;
     const cart = new CartPage(page);
-    await cart.VerifyItemInCart("Combination Pliers");
+    await cart.VerifyItemInCart(first_product.name);
     await cart.GoToLogin();
     const login = new LoginPage(page)
-    await login.EnterEmail('John.Doe@gmail.com');
-    await login.EnterPassword('JohnDoe1+');
+    await login.EnterEmail(user.email);
+    await login.EnterPassword(user.correct_password);
     await login.Login();
 
     const isLoginErrorVisible = await login.CheckErrorMessage();
@@ -83,21 +90,23 @@ test('invalid checkout', async ({ page }) => {
     if (isLoginErrorVisible) {
         login.GoToRegistration();
         const register = new RegisterPage(page);
-        await register.EnterFirstName("John");
-        await register.EnterLastName("Doe");
-        await register.EnterDOB("2001-01-01");
-        await register.EnterStreet("Abbey Road");
-        await register.EnterPostalCode("12345");
-        await register.EnterCity("London");
-        await register.EnterState("London");
-        await register.SelectCountry("GB");
-        await register.EnterPhone("1234567");
-        await register.EnterEmail("John.Doe@gmail.com");
-        await register.EnterPassword("JohnDoe1+");
+        await register.EnterFirstName(user.first_name);
+        await register.EnterLastName(user.last_name);
+        await register.EnterDOB(user.dob);
+        await register.EnterStreet(user.street);
+        await register.EnterPostalCode(user.postal_code);
+        await register.EnterCity(user.city);
+        await register.EnterState(user.state);
+        await register.SelectCountry(user.country);
+        await register.EnterPhone(user.phone);
+        await register.EnterEmail(user.email);
+        await register.EnterPassword(user.correct_password);
         await register.Register();
-        await login.EnterEmail('John.Doe@gmail.com');
-        await login.EnterPassword('JohnDoe1+');
+        await page.waitForTimeout(3000);
+        await login.EnterEmail(user.email);
+        await login.EnterPassword(user.correct_password);
         await login.Login();
+        await page.waitForTimeout(3000);
         await product.OpenCart();
         await cart.GoToLogin();
     }
@@ -105,47 +114,41 @@ test('invalid checkout', async ({ page }) => {
     await cart.GoToBilling();
     await cart.GoToCheckout();
     const checkout = new CheckoutPage(page);
-    await checkout.SelectPayment('bank-transfer');
-    await checkout.EnterBankName("Test Bank");
-    await checkout.EnterAccountName("Test Account");
-    await checkout.EnterAccountNumber("1234567-");
+    await checkout.SelectPayment(checkout_details.type);
+    await checkout.EnterBankName(checkout_details.bank_name);
+    await checkout.EnterAccountName(checkout_details.account_name);
+    await checkout.EnterAccountNumber(checkout_details.invalid_account_number);
 
     await checkout.CheckError();
-    console.log("Invalid bank account number!")
+    console.log("Invalid bank account number! - Test Passed")
 });
 
 //Testing multiple product order
-test('multiple items', async ({ page }) => {
+test.only('multiple items', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
     const product = new ProductPage(page);
-    await product.SelectItem("Combination Pliers")
-    await product.AddToCart();
-    await product.BackToHome();
+    let total = 0;
+    let i=0;
+    for (const productData of products) {
+        await product.SelectItem(productData.name);
+        await product.AddToCart();
+        await product.BackToHome();
+        total += productData.price;
+        i++;
+        if(i==4){
+            product.GoToPage("2");
+        }
+    }
 
-    await product.SelectItem("Claw Hammer with Shock Reduction Grip")
-    await product.AddToCart();
-    await product.BackToHome();
-
-    await product.SelectItem("Bolt Cutters")
-    await product.AddToCart();
-    await product.BackToHome();
-
-    await product.SelectItem("Thor Hammer")
-    await product.AddToCart();
-    await product.BackToHome();
-
-    product.GoToPage("2");
-
-    await product.SelectItem("Wood Saw")
-    await product.AddToCart();
+    const formattedTotal = `$ ${total.toFixed(2)}`;
     await product.OpenCart();
 
     //Login
     const cart = new CartPage(page);
     await cart.GoToLogin();
     const login = new LoginPage(page)
-    await login.EnterEmail('John.Doe@gmail.com');
-    await login.EnterPassword('JohnDoe1+');
+    await login.EnterEmail(user.email);
+    await login.EnterPassword(user.correct_password);
     await login.Login();
 
     const isLoginErrorVisible = await login.CheckErrorMessage();
@@ -153,21 +156,23 @@ test('multiple items', async ({ page }) => {
     if (isLoginErrorVisible) {
         login.GoToRegistration();
         const register = new RegisterPage(page);
-        await register.EnterFirstName("John");
-        await register.EnterLastName("Doe");
-        await register.EnterDOB("2001-01-01");
-        await register.EnterStreet("Abbey Road");
-        await register.EnterPostalCode("12345");
-        await register.EnterCity("London");
-        await register.EnterState("London");
-        await register.SelectCountry("GB");
-        await register.EnterPhone("1234567");
-        await register.EnterEmail("John.Doe@gmail.com");
-        await register.EnterPassword("JohnDoe1+");
+        await register.EnterFirstName(user.first_name);
+        await register.EnterLastName(user.last_name);
+        await register.EnterDOB(user.dob);
+        await register.EnterStreet(user.street);
+        await register.EnterPostalCode(user.postal_code);
+        await register.EnterCity(user.city);
+        await register.EnterState(user.state);
+        await register.SelectCountry(user.country);
+        await register.EnterPhone(user.phone);
+        await register.EnterEmail(user.email);
+        await register.EnterPassword(user.correct_password);
         await register.Register();
-        await login.EnterEmail('John.Doe@gmail.com');
-        await login.EnterPassword('JohnDoe1+');
+        await page.waitForTimeout(3000);
+        await login.EnterEmail(user.email);
+        await login.EnterPassword(user.correct_password);
         await login.Login();
+        await page.waitForTimeout(3000);
         await product.OpenCart();
         await cart.GoToLogin();
     }
@@ -175,20 +180,19 @@ test('multiple items', async ({ page }) => {
     await cart.GoToBilling();
     await cart.GoToCheckout();
     const checkout = new CheckoutPage(page);
-    await checkout.SelectPayment('bank-transfer');
-    await checkout.EnterBankName("Test Bank");
-    await checkout.EnterAccountName("Test Account");
-    await checkout.EnterAccountNumber("1234567");
+    await checkout.SelectPayment(checkout_details.type);
+    await checkout.EnterBankName(checkout_details.bank_name);
+    await checkout.EnterAccountName(checkout_details.account_name);
+    await checkout.EnterAccountNumber(checkout_details.valid_account_number);
     await checkout.ConfirmOrder();
 
     // Getting the inovice number
     const invoiceNumber = await checkout.GetInvoice();
-
     await checkout.CheckInvoices();
 
     const invoice = new InvoicesPage(page)
-    await invoice.OpenInvoice(invoiceNumber, "Abbey Road")
-    await invoice.VerifyTotal("$ 99.29")
+    await invoice.OpenInvoice(invoiceNumber, user.street)
+    await invoice.VerifyTotal(formattedTotal);
 
-    console.log(`Order ${invoiceNumber} placed and verified successfully!`);
+    console.log(`Order ${invoiceNumber} placed and verified successfully! - Test Passed`);
 })

@@ -30,11 +30,9 @@ export class CheckoutPage{
     }
 
     async ConfirmOrder() {
-        let i=0;
-        while (await this.page.locator('[data-test="finish"]').isVisible() && i<4) {  //Sometimes the button disappears with 2 clicks, while other times it takes 3
+        while (await this.page.locator('[data-test="finish"]').isVisible()) {  //Sometimes the button disappears with 2 clicks, while other times it takes more
             await this.page.locator('[data-test="finish"]').click();
             await this.page.waitForTimeout(1000); // Wait for 1 second 
-            i++;
         }
     }
 
