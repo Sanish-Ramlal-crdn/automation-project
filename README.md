@@ -2,7 +2,7 @@
 <p align="center"><a href="#project-description">Project Description</a> -
 <a href="#key-features">Key Features</a> - 
 <a href="#ui-test-scenarios">UI Test Scenarios</a> -
-<a href="#how-to-run">How To Run</a> -
+<a href="#how-to-run">How To Run</a> 
 </p>
 
 ## Project Description
@@ -15,7 +15,7 @@ This project mainly uses:
 *   **Page Object Model (POM)**: To separate reusable page classes.
 *   **Cross-Browser testing**: All the tests run on Chrome, FireFox and Edge.
 *   **Data-driven testing**: Test fixtures have been included via JSON Objects.
-*   **Screenshots**: Screenshots have been included for key UI actions.
+*   **Screenshots**: Screenshots have been included for key UI actions and error messages. They can be found in the 'screenshots' folder inside the 'tests' folder
 *   **Retries**: tests can be retried up to 2 times for flaky tests.
 *   **Continuous Integration (CI) support**: All tests are Continuously integrated via GitHub Actions for every commit done.
 *   **Reporting**: A report has already been generated in the playwright-report folder of the project which shows all the test results and is automatically generated every time a test is run
@@ -74,10 +74,10 @@ npm install -g typescript
 
 Clone the repository 
 ```javascript
-npm install -g typescript
+git clone https://github.com/Sanish-Ramlal-crdn/automation-project.git
 ```
 
-Once you have installed TypeScript, open the project and install Playwright if it's not already installed by running the below command in the project's root
+Once you have installed TypeScript, open the project and install Playwright if it's not already installed by running the below command in the project's root in the terminal
 ```javascript
 npm init playwright@latest
 ```
@@ -89,7 +89,7 @@ npx playwright test
 
 Or you can choose which test file to run
 ```javascript
-npx playwright test ./tests/ui/[test_file_name]
+npx playwright test ./tests/ui/[test_file_name].spec.ts
 ```
 
 You can also select the browser on which to run the tests. For example
@@ -112,3 +112,10 @@ Report
 ```javascript
 npx playwright show-report
 ```
+
+You can also run the tests via the Playwright UI
+```javascript
+npx playwright test --ui
+```
+
+For more information, you can visit the official Playwright documentation at: https://playwright.dev/docs/api/class-playwright
