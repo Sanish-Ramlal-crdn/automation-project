@@ -18,47 +18,48 @@ This project mainly uses:
 *   **Screenshots**: Screenshots have been included for key UI actions.
 *   **Retries**: tests can be retried up to 2 times for flaky tests.
 *   **Continuous Integration (CI) support**: All tests are Continuously integrated via GitHub Actions for every commit done.
-*   **Reporting**: A report has already been generated in the playwright-report folder of the project which shows all the test results
+*   **Reporting**: A report has already been generated in the playwright-report folder of the project which shows all the test results and is automatically generated every time a test is run
 
 ## UI Test Scenarios
 
 The following scenarios have been tested:
-1. User Authentication
+1. **User Authentication**
 
-    • ✅ Valid Login (Enter correct credentials & verify login)
+    *  ✅ Valid Login (Enter correct credentials & verify login)
 
-    • ❌ Invalid Login (Enter wrong credentials & validate error message)
+    *  ❌ Invalid Login (Enter wrong credentials & validate error message)
 
-2. Product Purchase Flow
-    • Add a product to cart
+2. **Product Purchase Flow**
 
-    o Browse available products
+    * Add a product to cart
 
-    o Add a product to the cart
+    *  Browse available products
 
-    o Verify the cart reflects the correct item
+    *  Add a product to the cart
 
-3. Checkout & Complete Order
+    *  Verify the cart reflects the correct item
 
-    • Proceed to checkout
+3. **Checkout & Complete Order**
 
-    • Enter valid payment details
+    *  Proceed to checkout
 
-    • Complete the purchase
+    *  Enter valid payment details
 
-    • Verify order confirmation
+    *  Complete the purchase
 
-4. Invalid Checkout
+    *  Verify order confirmation
 
-    • Attempt checkout with an invalid payment
+4. **Invalid Checkout**
 
-    • Validate error messages
+    *  Attempt checkout with an invalid payment
 
-5. Multiple Product Order
+    *  Validate error messages
 
-    • Add 5+ products to the cart
+5. **Multiple Product Order**
 
-    • Checkout & verify order summary
+    *  Add 5+ products to the cart
+
+    *  Checkout & verify order summary
 
 
 ## How to Run
@@ -71,23 +72,22 @@ TypeScript
 npm install -g typescript
 ```
 
-Once you have installed TypeScript, open the project and install Playwright if it's not already installed by running the below command in the project's root
+Clone the repository 
+```javascript
+npm install -g typescript
+```
 
-Playwright
+Once you have installed TypeScript, open the project and install Playwright if it's not already installed by running the below command in the project's root
 ```javascript
 npm init playwright@latest
 ```
 
 Now, you can run all the tests at once by typing this command on the terminal of your code editor
-
-All Tests
 ```javascript
 npx playwright test
 ```
 
 Or you can choose which test file to run
-
-Select test
 ```javascript
 npx playwright test ./tests/ui/[test_file_name]
 ```
@@ -107,6 +107,7 @@ npx playwright test --headed
 ```
 
 You can view a report after doing a test by running the following command
+
 Report
 ```javascript
 npx playwright show-report
