@@ -1,5 +1,8 @@
 ## Assignment 1: Web UI Testing
-<p align="center"><a href="#project-description">Project Description</a> - <a href="#key-features">Key Features</a> - <a href="#how-to-run">How To Run</a></p>
+<p ><a href="#project-description">Project Description</a> 
+<a href="#key-features">Key Features</a>
+<a href="#how-to-run">How To Run</a>
+</p>
 
 ## Project Description
 
@@ -21,26 +24,35 @@ This project mainly uses:
 The following scenarios have been tested:
 1. User Authentication
     • ✅ Valid Login (Enter correct credentials & verify login)
+
     • ❌ Invalid Login (Enter wrong credentials & validate error message)
 
 2. Product Purchase Flow
     • Add a product to cart
+
     o Browse available products
+
     o Add a product to the cart
+
     o Verify the cart reflects the correct item
 
 3. Checkout & Complete Order
     • Proceed to checkout
+
     • Enter valid payment details
+
     • Complete the purchase
+
     • Verify order confirmation
 
 4. Invalid Checkout
     • Attempt checkout with an invalid payment
+
     • Validate error messages
 
 5. Multiple Product Order
     • Add 5+ products to the cart
+
     • Checkout & verify order summary
 
 
