@@ -31,7 +31,6 @@ export class RegisterPage {
         await this.first_name.fill(first_name);
     }
 
-
     async EnterLastName(last_name: string) {
         await this.last_name.fill(last_name);
     }

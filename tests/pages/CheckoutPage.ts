@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 export class CheckoutPage{
     private page;
     private bank_name;
@@ -35,17 +36,25 @@ export class CheckoutPage{
     }
 
     async ConfirmOrder() {
-        while (await this.page.locator('[data-test="finish"]').isVisible()) {  //Sometimes the button disappears with 2 clicks, while other times it takes more
+        let i=0;
+        while (await this.page.locator('[data-test="finish"]').isVisible() && i<4) {  //Sometimes the button disappears with 2 clicks, while other times it takes 3
             await this.page.locator('[data-test="finish"]').click();
             await this.page.waitForTimeout(1000); // Wait for 1 second 
+            i++;
         }
     }
 
+    async CheckError(){
+        expect(this.page.locator('[class="alert alert-danger ng-star-inserted]')).toBeVisible;
+    }
+
     async GetInvoice(){
-        await this.page.$eval('div#order-confirmation span', element => element.textContent);
+        await this.page.waitForSelector('div#order-confirmation span');
+        return await this.page.$eval('div#order-confirmation span', element => element.textContent);
     }
 
     async CheckInvoices(){
-        
+            await this.page.locator('[data-test="nav-menu"]').click();
+    await this.page.locator('[data-test="nav-my-invoices"]').click();
     }
 }

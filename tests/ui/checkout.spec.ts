@@ -4,6 +4,7 @@ import { CartPage } from '../pages/CartPage.ts'
 import { LoginPage } from '../pages/LoginPage.ts'
 import { CheckoutPage } from '../pages/CheckoutPage.ts'
 import { RegisterPage } from '../pages/RegisterPage.ts'
+import { InvoicesPage } from '../pages/InvoicesPage.ts';
 
 //Testing for how 1 product is added to the cart
 test('valid checkout', async ({ page }) => {
@@ -22,10 +23,10 @@ test('valid checkout', async ({ page }) => {
     await login.EnterPassword('JohnDoe1+');
     await login.Login();
 
-    await page.waitForTimeout(2000);
     const isLoginErrorVisible = await login.CheckErrorMessage();
 
     if (isLoginErrorVisible) {
+        login.GoToRegistration();
         const register = new RegisterPage(page);
         await register.EnterFirstName("John");
         await register.EnterLastName("Doe");
@@ -56,7 +57,7 @@ test('valid checkout', async ({ page }) => {
     await checkout.ConfirmOrder();
 
     // Getting the inovice number
-    const invoiceNumber = await page.$eval('div#order-confirmation span', element => element.textContent);
+    const invoiceNumber = await checkout.GetInvoice();
     console.log(`Order ${invoiceNumber} placed and verified successfully!`);
 });
 
@@ -64,27 +65,23 @@ test('valid checkout', async ({ page }) => {
 test('invalid checkout', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
 
-    await page.locator('h5.card-title:text("Combination Pliers")').click();
-
     const product = new ProductPage(page);
+    await product.SelectItem("Combination Pliers")
     await product.AddToCart();
-    await page.getByRole('alert', { name: 'Product added to shopping' }).click();
-    await page.locator('[data-test="nav-cart"]').click();
-
+    await product.OpenCart();
     //Checking if the proper item has been added to the cart;
-    await expect(page.locator('[data-test="product-title"]')).toHaveText('Combination Pliers');
-
-    //Login
     const cart = new CartPage(page);
+    await cart.VerifyItemInCart("Combination Pliers");
     await cart.GoToLogin();
     const login = new LoginPage(page)
     await login.EnterEmail('John.Doe@gmail.com');
     await login.EnterPassword('JohnDoe1+');
     await login.Login();
-    await page.waitForTimeout(2000);
-    const isLoginErrorVisible = await page.locator('[data-test="login-error"]').isVisible();
+
+    const isLoginErrorVisible = await login.CheckErrorMessage();
 
     if (isLoginErrorVisible) {
+        login.GoToRegistration();
         const register = new RegisterPage(page);
         await register.EnterFirstName("John");
         await register.EnterLastName("Doe");
@@ -98,68 +95,63 @@ test('invalid checkout', async ({ page }) => {
         await register.EnterEmail("John.Doe@gmail.com");
         await register.EnterPassword("JohnDoe1+");
         await register.Register();
-        const login = new LoginPage(page)
         await login.EnterEmail('John.Doe@gmail.com');
         await login.EnterPassword('JohnDoe1+');
         await login.Login();
-        await page.locator('[data-test="nav-cart"]').click();
-        const cart = new CartPage(page);
+        await product.OpenCart();
         await cart.GoToLogin();
     }
 
     await cart.GoToBilling();
     await cart.GoToCheckout();
-    await page.locator('[data-test="payment-method"]').selectOption('bank-transfer');
     const checkout = new CheckoutPage(page);
-    await checkout.CompleteOrder("Test Bank", "Test Account", "1234567");
+    await checkout.SelectPayment('bank-transfer');
+    await checkout.EnterBankName("Test Bank");
+    await checkout.EnterAccountName("Test Account");
+    await checkout.EnterAccountNumber("1234567-");
 
-    expect(page.locator('[class="alert alert-danger ng-star-inserted]')).toBeVisible;
+    await checkout.CheckError();
     console.log("Invalid bank account number!")
 });
 
 //Testing multiple product order
-test('multiple items', async ({ page }) => {
+test.only('multiple items', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
-
-    await page.locator('h5.card-title:text("Combination Pliers")').click();
-
     const product = new ProductPage(page);
+    await product.SelectItem("Combination Pliers")
     await product.AddToCart();
+    await product.BackToHome();
 
-    await page.goto('https://practicesoftwaretesting.com/');
-    await page.locator('h5.card-title:text("Claw Hammer with Shock Reduction Grip")').click();
-
+    await product.SelectItem("Claw Hammer with Shock Reduction Grip")
     await product.AddToCart();
-    await page.goto('https://practicesoftwaretesting.com/');
-    await page.locator('h5.card-title:text("Bolt Cutters")').click();
+    await product.BackToHome();
 
+    await product.SelectItem("Bolt Cutters")
     await product.AddToCart();
+    await product.BackToHome();
 
-    await page.goto('https://practicesoftwaretesting.com/');
-    await page.locator('h5.card-title:text("Thor Hammer")').click();
-
+    await product.SelectItem("Thor Hammer")
     await product.AddToCart();
+    await product.BackToHome();
 
-    await page.goto('https://practicesoftwaretesting.com/');
-    await page.locator('a[aria-label="Page-2"]').click();
-    await page.locator('h5.card-title:text("Wood Saw")').click();
+    product.GoToPage("2");
 
+    await product.SelectItem("Wood Saw")
     await product.AddToCart();
-    await page.locator('[data-test="nav-cart"]').click();
+    await product.OpenCart();
 
     //Login
     const cart = new CartPage(page);
     await cart.GoToLogin();
-    await page.pause();
     const login = new LoginPage(page)
     await login.EnterEmail('John.Doe@gmail.com');
     await login.EnterPassword('JohnDoe1+');
     await login.Login();
 
-    const isLoginErrorVisible = await page.locator('//html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[2]/app-login/div/div/div/div/div').isVisible();
-    console.log(isLoginErrorVisible);
+    const isLoginErrorVisible = await login.CheckErrorMessage();
 
     if (isLoginErrorVisible) {
+        login.GoToRegistration();
         const register = new RegisterPage(page);
         await register.EnterFirstName("John");
         await register.EnterLastName("Doe");
@@ -173,29 +165,30 @@ test('multiple items', async ({ page }) => {
         await register.EnterEmail("John.Doe@gmail.com");
         await register.EnterPassword("JohnDoe1+");
         await register.Register();
-        const login = new LoginPage(page)
         await login.EnterEmail('John.Doe@gmail.com');
         await login.EnterPassword('JohnDoe1+');
         await login.Login();
-        await page.locator('[data-test="nav-cart"]').click();
-        const cart = new CartPage(page);
+        await product.OpenCart();
         await cart.GoToLogin();
     }
 
     await cart.GoToBilling();
     await cart.GoToCheckout();
-    await page.locator('[data-test="payment-method"]').selectOption('bank-transfer');
     const checkout = new CheckoutPage(page);
-    await checkout.CompleteOrder("Test Bank", "Test Account", "1234567");
+    await checkout.SelectPayment('bank-transfer');
+    await checkout.EnterBankName("Test Bank");
+    await checkout.EnterAccountName("Test Account");
+    await checkout.EnterAccountNumber("1234567");
     await checkout.ConfirmOrder();
 
     // Getting the inovice number
-    const invoiceNumber = checkout.GetInvoice()
+    const invoiceNumber = await checkout.GetInvoice();
 
-    await page.locator('[data-test="nav-menu"]').click();
-    await page.locator('[data-test="nav-my-invoices"]').click();
-    await page.getByRole('row', { name: `${invoiceNumber} Abbey Road` }).getByRole('link').click();
-    const totalCost = await page.locator('[data-test="total"]').inputValue();
-    expect(totalCost).toBe("$ 99.29");
+    await checkout.CheckInvoices();
+
+    const invoice = new InvoicesPage(page)
+    await invoice.OpenInvoice(invoiceNumber, "Abbey Road")
+    await invoice.VerifyTotal("$ 99.29")
+
     console.log(`Order ${invoiceNumber} placed and verified successfully!`);
 })

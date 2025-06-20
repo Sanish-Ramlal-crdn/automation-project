@@ -25,7 +25,12 @@ export class LoginPage {
         await this.login_button.click()
     }
 
-    async CheckErrorMessage(){
+    async GoToRegistration() {
+        await this.page.locator('[data-test="register-link"]').click();
+    }
+
+    async CheckErrorMessage() {
+        await this.page.waitForTimeout(2000);
         return await this.page.locator('[data-test="login-error"]').isVisible();
     }
 }
