@@ -12,12 +12,6 @@ export class CheckoutPage{
         this.account_number = page.locator('#account_number');
     }
 
-    async CompleteOrder(bank_name: string, account_name: string, account_number: string){
-        await this.bank_name.fill(bank_name);
-        await this.account_name.fill(account_name);
-        await this.account_number.fill(account_number);
-    }
-
     async SelectPayment(choice: string){
         const payment_method=await this.page.locator('[data-test="payment-method"]')
         await payment_method.selectOption(`${choice}`);

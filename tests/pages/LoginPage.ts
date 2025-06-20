@@ -1,4 +1,5 @@
 //POM login class
+import { expect } from '@playwright/test';
 export class LoginPage {
     private page;
     private email_textbox;
@@ -19,6 +20,10 @@ export class LoginPage {
 
     async EnterPassword(password: string) {
         await this.password_textbox.fill(password);
+    }
+
+    async VerifyLoginError(){
+        await expect(this.page.locator('[data-test="login-error"]')).toBeVisible
     }
 
     async Login() {
