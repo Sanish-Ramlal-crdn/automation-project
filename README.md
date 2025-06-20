@@ -1,11 +1,9 @@
 ## Assignment 1: Web UI Testing
-
-<p style="display: flex; flex-direction: column; align-items: flex-start;">
-  <a href="#project-description">Project Description</a>
-  <a href="#key-features">Key Features</a>
-  <a href="#how-to-run">How To Run</a>
+<p align="center"><a href="#project-description">Project Description</a> -
+<a href="#key-features">Key Features</a> - 
+<a href="#ui-test-scenarios">UI Test Scenarios</a> -
+<a href="#how-to-run">How To Run</a> -
 </p>
-
 
 ## Project Description
 
@@ -105,6 +103,7 @@ npx playwright test --headed
 ```
 
 You can view a report after doing a test by running the following command
+Report
 ```javascript
 npx playwright show-report
 ```
