@@ -6,7 +6,7 @@ import { LoginUser, RegisterUser } from "../utils.ts";
 import urls from "../fixtures/urls.json";
 
 //tests for user Authentication
-test.only("valid login", async ({ page }) => {
+test("valid login", async ({ page }) => {
   //Test for a valid login
   await page.goto(urls.login_url);
   const login = new LoginPage(page);
