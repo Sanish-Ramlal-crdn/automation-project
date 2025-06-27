@@ -6,7 +6,7 @@ import { LoginUser, RegisterUser } from "../utils.ts";
 import urls from "../fixtures/urls.json";
 
 //tests for user Authentication
-test("valid login", async ({ page }) => {
+test.only("valid login", async ({ page }) => {
   //Test for a valid login
   await page.goto(urls.login_url);
   const login = new LoginPage(page);
@@ -18,7 +18,7 @@ test("valid login", async ({ page }) => {
     RegisterUser(page, register, login);
   }
   await page.waitForTimeout(3000); //Accounting for slow login
-  await expect(page.url()).toBe(urls.account_url);
+  expect(page.url()).toBe(urls.account_url);
   console.log("User logged in successfully - Test passed");
 });
 
