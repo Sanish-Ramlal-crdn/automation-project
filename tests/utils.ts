@@ -32,7 +32,7 @@ export async function RegisterUser(
   await login.Login();
 }
 
-export async function MakeValidPayment(page, checkout) {
+export async function MakeValidPayment(checkout) {
   await checkout.SelectPayment(checkout_details.type);
   await checkout.EnterBankName(checkout_details.bank_name);
   await checkout.EnterAccountName(checkout_details.account_name);
