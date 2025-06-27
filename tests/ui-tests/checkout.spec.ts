@@ -27,7 +27,7 @@ test.describe("single checkout", () => {
     await cart.VerifyItemInCart(first_product.name);
     await cart.GoToLogin();
     const login = new LoginPage(page);
-    LoginUser(page, login);
+    LoginUser(login);
 
     const isLoginErrorVisible = await login.CheckErrorMessage();
 
@@ -46,7 +46,7 @@ test.describe("single checkout", () => {
 
   test("valid checkout", async ({ page }) => {
     const checkout = new CheckoutPage(page);
-    MakeValidPayment(page, checkout);
+    MakeValidPayment(checkout);
 
     // Getting the inovice number
     const invoiceNumber = await checkout.GetInvoice();
@@ -92,7 +92,7 @@ test("multiple items", async ({ page }) => {
   const cart = new CartPage(page);
   await cart.GoToLogin();
   const login = new LoginPage(page);
-  LoginUser(page, login);
+  LoginUser(login);
 
   const isLoginErrorVisible = await login.CheckErrorMessage();
 
@@ -108,7 +108,7 @@ test("multiple items", async ({ page }) => {
   await cart.GoToBilling();
   await cart.GoToCheckout();
   const checkout = new CheckoutPage(page);
-  MakeValidPayment(page, checkout);
+  MakeValidPayment(checkout);
 
   // Getting the inovice number
   const invoiceNumber = await checkout.GetInvoice();

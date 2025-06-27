@@ -10,7 +10,7 @@ test("valid login", async ({ page }) => {
   //Test for a valid login
   await page.goto(urls.login_url);
   const login = new LoginPage(page);
-  LoginUser(page, login);
+  LoginUser(login);
   if (await login.CheckErrorMessage()) {
     //registering user in case the website does not retain login data
     login.GoToRegistration();

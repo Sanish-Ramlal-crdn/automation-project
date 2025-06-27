@@ -3,7 +3,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import user from "./fixtures/user.json";
 import checkout_details from "./fixtures/checkout.json";
 
-export async function LoginUser(page, login: LoginPage) {
+export async function LoginUser(login: LoginPage) {
   await login.EnterEmail(user.email);
   await login.EnterPassword(user.correct_password);
   await login.Login();
