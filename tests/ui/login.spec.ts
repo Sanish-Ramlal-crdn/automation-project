@@ -5,7 +5,7 @@ import user from "../fixtures/user.json";
 import { LoginUser, RegisterUser } from "../utils.ts";
 
 //tests for user Authentication
-test.only("valid login", async ({ page }) => {
+test("valid login", async ({ page }) => {
   //Test for a valid login
   await page.goto("https://practicesoftwaretesting.com/auth/login");
   const login = new LoginPage(page);

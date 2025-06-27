@@ -1,6 +1,7 @@
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import user from "./fixtures/user.json";
+import checkout_details from "./fixtures/checkout.json";
 
 export async function LoginUser(page, login: LoginPage) {
   await login.EnterEmail(user.email);
@@ -29,4 +30,12 @@ export async function RegisterUser(
   await login.EnterEmail(user.email);
   await login.EnterPassword(user.correct_password);
   await login.Login();
+}
+
+export async function MakeValidPayment(page, checkout) {
+  await checkout.SelectPayment(checkout_details.type);
+  await checkout.EnterBankName(checkout_details.bank_name);
+  await checkout.EnterAccountName(checkout_details.account_name);
+  await checkout.EnterAccountNumber(checkout_details.valid_account_number);
+  await checkout.ConfirmOrder();
 }
