@@ -9,13 +9,14 @@ import user from "../fixtures/user.json";
 import products from "../fixtures/products.json";
 import checkout_details from "../fixtures/checkout.json";
 import { LoginUser, MakeValidPayment, RegisterUser } from "../utils.ts";
+import urls from "../fixtures/urls.json";
 
 //Testing for how 1 product is added to the cart
 test.describe("single checkout", () => {
   let first_product;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://practicesoftwaretesting.com/");
+    await page.goto(urls.base_url);
     first_product = products.find((product) => product.id === "1");
     const product = new ProductPage(page);
     await product.SelectItem(first_product.name);
@@ -69,7 +70,7 @@ test.describe("single checkout", () => {
 
 //Testing multiple product order
 test("multiple items", async ({ page }) => {
-  await page.goto("https://practicesoftwaretesting.com/");
+  await page.goto(urls.base_url);
   const product = new ProductPage(page);
   let total = 0;
   let i = 0;
