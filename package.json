@@ -17,6 +17,7 @@
   "homepage": "https://github.com/Sanish-Ramlal-crdn/automation-project#readme",
   "devDependencies": {
     "@playwright/test": "^1.53.0",
-    "@types/node": "^24.0.3"
+    "@types/node": "^24.0.3",
+    "monocart-reporter": "^2.9.21"
   }
 }

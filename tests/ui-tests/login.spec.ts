@@ -17,8 +17,9 @@ test("valid login", async ({ page }) => {
     const register = new RegisterPage(page);
     RegisterUser(page, register, login);
   }
-  await page.waitForTimeout(3000); //Accounting for slow login
-  expect(page.url()).toBe(urls.account_url);
+  await expect(page).toHaveURL(urls.account_url, {
+    timeout: 10000,
+  });
   console.log("User logged in successfully - Test passed");
 });
 
